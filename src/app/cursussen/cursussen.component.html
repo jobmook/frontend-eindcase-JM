@@ -1,17 +1,15 @@
 <h2>Cursusoverzicht:</h2>
 <table>
     <thead>
-        <td>Titel</td>
-        <td>Cursuscode</td>
-        <td>Duur</td>
         <td>Startdatum</td>
+        <td>Duur</td>
+        <td>Titel</td>        
     </thead>
     <tbody>
-        <tr *ngFor="let cursus of cursussen">
-            <td>{{cursus.Titel}}</td>
-            <td>{{cursus.Cursuscode}}</td>
-            <td>{{cursus.Duur}}</td>
-            <td>{{cursus.Startdatum}}</td>
+        <tr *ngFor="let cursusItem of cursussen">
+            <td>{{cursusItem.Startdatum}}</td>
+            <td>{{cursusItem.Duur}}</td>
+            <td>{{cursusItem.Titel}}</td>
         </tr>
     </tbody>
 </table>

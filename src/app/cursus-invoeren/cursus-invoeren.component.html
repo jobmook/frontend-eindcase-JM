@@ -1,6 +1,7 @@
 <h3>Tekstbestand opvoeren:</h3>
 
 <input type="file" (change)="onFileSelected($event)">
+<button type="button" class="btn btn-primary" (click)="readFile()">Invoeren</button>
 
-<button type="button" class="btn btn-primary" 
-     (click)="readFile()">Invoeren</button>
+<p id="toevoeging" *ngIf="aantalCursussenToegevoegd != 0 && aantalCursusInstantiesToegevoegd != 0">Er zijn {{ aantalCursussenToegevoegd }} cursussen en {{ aantalCursusInstantiesToegevoegd}} cursusinstanties toegevoegd.</p>
+<p id="duplicaten" *ngIf="aantalDuplicaten != 0">Er zijn {{ aantalDuplicaten }} duplicaten gevonden.</p>

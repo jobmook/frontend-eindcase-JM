@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,6 +10,9 @@ export class CursusInvoerenComponent implements OnInit {
   fileEntity!: File;
   fileContents! : string;
   fileName!: string;
+  aantalCursussenToegevoegd: number = 0;
+  aantalCursusInstantiesToegevoegd: number = 0;
+  aantalDuplicaten: number = 0;
 
 onFileSelected(event: any) {
   const file: File = event.target.files[0];
@@ -30,14 +34,14 @@ readFile(){
     console.log(lines[0]);
     lines.forEach(element => {
       let cursusBlok = element.split('\n');
-      let newCursus : {Titel:string, Cursuscode:string, Duur:string, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:'', Startdatum:''};
+      let newCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
       cursusBlok.forEach(line => {
         if(line.startsWith('Titel')){
           newCursus.Titel = line.substring(7);
         } else if(line.startsWith('Cursuscode')){
           newCursus.Cursuscode = line.substring(12);
         } else if(line.startsWith('Duur')){
-          newCursus.Duur = line.substring(6);
+          newCursus.Duur = +line.substring(6,7);
         } else if(line.startsWith('Startdatum')){
           newCursus.Startdatum = line.substring(12)
         } else {
@@ -51,28 +55,46 @@ readFile(){
       console.log(cursus);
     });
 
-
-    // let cursusLijst = [];
-    // let index = 0;
-    // let Cursus : {Titel:string, Duur: string, Code: string, Startdatum:string};
-    // lines.forEach(line => {
-    //   console.log(line)
-
-    //   index++;
+    // cursusLijst.forEach(cursus => {
+    //   fetch('https://localhost:7183/api/cursus', {
+    //     method: 'POST',
+    //     headers:{
+    //       'Content-Type':'application/json'
+    //     },
+    //     body: JSON.stringify(cursus)
+    //   })
+    //   //.then((response) => response.json())
+    //   .then((data) => {
+    //   console.log('Success:', data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
     // });
 
-
+    fetch('https://localhost:7183/api/cursus', {
+        method: 'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify(cursusLijst)
+      })
+      .then((response) => response.json())
+      .then((data) => {
+      console.log('Success:', data);
+      this.aantalCursusInstantiesToegevoegd = data.cursusInstantieToevoeging;
+      this.aantalCursussenToegevoegd = data.cursusToevoeging;
+      this.aantalDuplicaten = data.duplicaten;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
   fileReader.readAsText(this.fileEntity);
 }
 
-readFileContents(){
-  
-}
-  
 constructor() { }
 
-  
 ngOnInit(): void {
 
 }
