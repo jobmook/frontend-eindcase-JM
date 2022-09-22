@@ -1,5 +1,7 @@
 import { JsonPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CursusService } from '../cursus.service';
 
 @Component({
   selector: 'app-cursus-invoeren',
