@@ -7,7 +7,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let cursusItem of cursussen">
-            <td>{{cursusItem.Startdatum}}</td>
+            <td>{{cursusItem.Startdatum | date: 'dd/MM/yyyy'}}</td>
             <td>{{cursusItem.Duur}}</td>
             <td>{{cursusItem.Titel}}</td>
         </tr>
@@ -19,5 +19,8 @@
 <input type="file" (change)="onFileSelected($event)">
 <button type="button" class="btn btn-primary" (click)="readFile()">Invoeren</button>
 
+<p *ngIf="!correctFormaat">'Bestand kan niet worden gevonden' en/of 'Bestand is niet in correct formaat.'</p>
 <p id="toevoeging" *ngIf="aantalCursussenToegevoegd != 0 && aantalCursusInstantiesToegevoegd != 0">Er zijn {{ aantalCursussenToegevoegd }} cursussen en {{ aantalCursusInstantiesToegevoegd}} cursusinstanties toegevoegd.</p>
 <p id="duplicaten" *ngIf="aantalDuplicaten != 0">Er zijn {{ aantalDuplicaten }} duplicaten gevonden.</p>
+<br>
+<button (click)="resetLijst()">Reset</button>

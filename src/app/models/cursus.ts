@@ -1,6 +1,6 @@
 export interface Cursus {
     Titel: string,
-    Startdatum: string,
+    Startdatum: Date,
     Duur: number,
     Cursuscode:string
 }
@@ -8,7 +8,7 @@ export interface Cursus {
 export function createCursus(overrides?: Partial<Cursus>): Cursus {
     return {
         Titel: '',
-        Startdatum: '',
+        Startdatum: new Date(),
         Duur: 0,
         Cursuscode: '',
         ...overrides
