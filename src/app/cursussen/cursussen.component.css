@@ -5,3 +5,12 @@
 #toevoeging {
     color: green;
 }
+
+.foutRegel div {
+    border-style: solid;
+    border-color: black;
+}
+
+.foutRegel p {
+    color: red;
+}

@@ -19,8 +19,13 @@
 <input type="file" (change)="onFileSelected($event)">
 <button type="button" class="btn btn-primary" (click)="readFile()">Invoeren</button>
 
+<div *ngIf="foutRegel != 0" class="foutRegel">
+    <p>Bestand is niet in correct formaat op regel {{ foutRegel + 1 }}</p>
+    <p>Er zijn geen cursusinstanties toegevoegd.</p>
+</div>
 <p *ngIf="!correctFormaat">'Bestand kan niet worden gevonden' en/of 'Bestand is niet in correct formaat.'</p>
 <p id="toevoeging" *ngIf="aantalCursussenToegevoegd != 0 && aantalCursusInstantiesToegevoegd != 0">Er zijn {{ aantalCursussenToegevoegd }} cursussen en {{ aantalCursusInstantiesToegevoegd}} cursusinstanties toegevoegd.</p>
 <p id="duplicaten" *ngIf="aantalDuplicaten != 0">Er zijn {{ aantalDuplicaten }} duplicaten gevonden.</p>
+
 <br>
 <button (click)="resetLijst()">Reset</button>

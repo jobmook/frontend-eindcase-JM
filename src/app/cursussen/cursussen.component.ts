@@ -15,11 +15,11 @@ export class CursussenComponent implements OnInit {
   fileEntity!: File;
   fileContents! : string;
   fileName!: string;
-  aantalCursussenToegevoegd: number = 0;
-  aantalCursusInstantiesToegevoegd: number = 0;
-  aantalDuplicaten: number = 0;
-  correctFormaat: boolean = true;
-  fileValidationFoutmelding!: string;
+  aantalCursussenToegevoegd = 0;
+  aantalCursusInstantiesToegevoegd = 0;
+  aantalDuplicaten= 0;
+  correctFormaat = true;
+  foutRegel = 0;
 
 onFileSelected(event: any) {
   const file: File = event.target.files[0];
@@ -70,11 +70,14 @@ objectenUitlezen(){
 
 fileValidation(){
   const regex = /Titel: (.*)$\nCursuscode: (.*)$\nDuur: (\d+ dagen)\nStartdatum: (\d\d?\/\d\d?\/\d\d\d\d)\n/gm;
-  
-
 }
 
 readFile(){
+  this.aantalCursussenToegevoegd = 0;
+  this.aantalCursusInstantiesToegevoegd = 0;
+  this.aantalDuplicaten= 0;
+  this.correctFormaat = true;
+  this.foutRegel = 0;
   let fileReader = new FileReader();
   fileReader.onload = () => {
   console.log(fileReader.result); // read entire file
@@ -94,7 +97,7 @@ readFile(){
       case 0:
         const foundTitel = currentLine.match(/Titel: (.*)$/);
         if (foundTitel == null) {
-          this.fileValidationFoutmelding = "Fout op line " + index;
+          this.foutRegel =  index;
           return;
         }
         nieuweCursus.Titel = foundTitel[1];
@@ -103,7 +106,7 @@ readFile(){
       case 1:
         const foundCursuscode = currentLine.match(/Cursuscode: (.*)$/);
         if (foundCursuscode == null) {
-          this.fileValidationFoutmelding = "Fout op line " + index;
+          this.foutRegel =  index;
           return;
         }
         nieuweCursus.Cursuscode = foundCursuscode[1];
@@ -112,7 +115,7 @@ readFile(){
       case 2:
         const foundDuur = currentLine.match(/Duur: (\d+) dagen$/);
         if (foundDuur == null) {
-          this.fileValidationFoutmelding = "Fout op line " + index;
+          this.foutRegel =  index;
           return;
         }
         nieuweCursus.Duur = +foundDuur[1];
@@ -121,7 +124,7 @@ readFile(){
       case 3:
         const foundStartdatum = currentLine.match(/Startdatum: (\d\d?\/\d\d?\/\d\d\d\d)$/);
         if (foundStartdatum == null) {
-          this.fileValidationFoutmelding = "Fout op line " + index;
+          this.foutRegel =  index;
           return;
         }
         // let formattedString = foundStartdatum[1].substring(3,5) + '/' + foundStartdatum[1].substring(0,2) + '/' + foundStartdatum[1].substring(6);
@@ -131,7 +134,7 @@ readFile(){
       case 4:
         const foundLinebreak = currentLine.match(/^$/gm);
         if (foundLinebreak == null) {
-          this.fileValidationFoutmelding = "Fout op line " + index;
+          this.foutRegel =  index;
           return;
         }
         break;
