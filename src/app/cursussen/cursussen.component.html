@@ -1,31 +1,3 @@
-<h2>Cursusoverzicht:</h2>
-<table>
-    <thead>
-        <td>Startdatum</td>
-        <td>Duur</td>
-        <td>Titel</td>        
-    </thead>
-    <tbody>
-        <tr *ngFor="let cursusItem of cursussen">
-            <td>{{cursusItem.Startdatum | date: 'dd/MM/yyyy'}}</td>
-            <td>{{cursusItem.Duur}}</td>
-            <td>{{cursusItem.Titel}}</td>
-        </tr>
-    </tbody>
-</table>
+<app-cursus-list [cursusList]="cursussen"></app-cursus-list>
+<app-cursus-invoeren (postRequestEvent)="haalItemsOp($event)"></app-cursus-invoeren>
 
-<h3>Tekstbestand opvoeren:</h3>
-
-<input type="file" (change)="onFileSelected($event)">
-<button type="button" class="btn btn-primary" (click)="readFile()">Invoeren</button>
-
-<div *ngIf="foutRegel != 0" class="foutRegel">
-    <p>Bestand is niet in correct formaat op regel {{ foutRegel + 1 }}</p>
-    <p>Er zijn geen cursusinstanties toegevoegd.</p>
-</div>
-<p *ngIf="!correctFormaat">'Bestand kan niet worden gevonden' en/of 'Bestand is niet in correct formaat.'</p>
-<p id="toevoeging" *ngIf="aantalCursussenToegevoegd != 0 && aantalCursusInstantiesToegevoegd != 0">Er zijn {{ aantalCursussenToegevoegd }} cursussen en {{ aantalCursusInstantiesToegevoegd}} cursusinstanties toegevoegd.</p>
-<p id="duplicaten" *ngIf="aantalDuplicaten != 0">Er zijn {{ aantalDuplicaten }} duplicaten gevonden.</p>
-
-<br>
-<button (click)="resetLijst()">Reset</button>

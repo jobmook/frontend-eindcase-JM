@@ -1,0 +1,15 @@
+<h2>Cursusoverzicht:</h2>
+<table>
+    <thead>
+        <td>Startdatum</td>
+        <td>Duur</td>
+        <td>Titel</td>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let cursusItem of cursusList">
+            <td>{{cursusItem.Startdatum | date: 'dd/MM/yyyy'}}</td>
+            <td>{{cursusItem.Duur}}</td>
+            <td>{{cursusItem.Titel}}</td>
+        </tr>
+    </tbody>
+</table>

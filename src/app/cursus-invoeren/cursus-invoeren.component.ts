@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { outputAst } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CursusService } from '../cursus.service';
+import { createCursus } from '../models/cursus';
 
 @Component({
   selector: 'app-cursus-invoeren',
@@ -15,85 +16,144 @@ export class CursusInvoerenComponent implements OnInit {
   aantalCursussenToegevoegd: number = 0;
   aantalCursusInstantiesToegevoegd: number = 0;
   aantalDuplicaten: number = 0;
+  foutRegel = 0;
+  correctFormaat: boolean = true;
+  
+  @Output()
+  postRequestEvent = new EventEmitter<boolean>();
 
-onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-  console.log(file.name);
-  this.fileEntity = file;
-}
+  postRequest(value: boolean){
+    this.postRequestEvent.emit(value);
+  }
 
-readFile(){
-   let fileReader = new FileReader();
-   fileReader.onload = () => {
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    console.log(file.name);
+    console.log(file.type);
+    if(file.type != 'text/plain'){
+      this.correctFormaat = false;
+    } else {
+      this.correctFormaat = true;
+    }
+    this.fileEntity = file;
+  }
+  
+  resetLijst(){
+    fetch('https://localhost:7183/api/cursus/remove-all-entries')
+    .then(response => response)
+    .then((data) => {
+      console.log(data);
+      this.aantalCursussenToegevoegd = 0;
+      this.aantalCursusInstantiesToegevoegd  = 0;
+      this.aantalDuplicaten = 0;
+    }
+   );
+  }
+  
+  objectenSturen(cursusLijst: {}[]){
+    fetch('https://localhost:7183/api/cursus', {
+      method: 'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(cursusLijst)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+    console.log('Success:', data);
+    this.aantalCursusInstantiesToegevoegd = data.cursusInstantieToevoeging;
+    this.aantalCursussenToegevoegd = data.cursusToevoeging;
+    this.aantalDuplicaten = data.duplicaten;
+    this.postRequest(true);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });  
+  }
+  
+  // Returns: array met Cursus objecten -> kan worden ingelezen door backend
+  fileValidation (){
+    let cursusLijst: {}[] = [];
+    let nieuweCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
+    
+    let counter = 0;
+    let lines: string[] = this.fileContents.split('\n');
+    lines.pop();
+    for (let index = 0; index < lines.length; index++) {
+      const currentLine = lines[index];
+      switch (counter) {
+        case 0:
+          const foundTitel = currentLine.match(/Titel: (.*)$/);
+          if (foundTitel == null) {
+            this.foutRegel =  index;
+            return;
+          }
+          nieuweCursus.Titel = foundTitel[1];
+          break;
+  
+        case 1:
+          const foundCursuscode = currentLine.match(/Cursuscode: (.*)$/);
+          if (foundCursuscode == null) {
+            this.foutRegel =  index;
+            return;
+          }
+          nieuweCursus.Cursuscode = foundCursuscode[1];
+          break;
+  
+        case 2:
+          const foundDuur = currentLine.match(/Duur: (\d+) dagen$/);
+          if (foundDuur == null) {
+            this.foutRegel =  index;
+            return;
+          }
+          nieuweCursus.Duur = +foundDuur[1];
+          break;
+  
+        case 3:
+          const foundStartdatum = currentLine.match(/Startdatum: (\d\d?\/\d\d?\/\d\d\d\d)$/);
+          if (foundStartdatum == null) {
+            this.foutRegel =  index;
+            return;
+          }
+          nieuweCursus.Startdatum = foundStartdatum[1];
+          break;
+  
+        case 4:
+          const foundLinebreak = currentLine.match(/^$/gm);
+          if (foundLinebreak == null) {
+            this.foutRegel =  index;
+            return;
+          }
+          break;
+      
+        default:
+          break;
+      }
+      if(counter == 4) {
+        cursusLijst.push(nieuweCursus);
+        counter = 0;
+        nieuweCursus = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
+      }
+      else counter++; 
+    }
+    return cursusLijst;
+  }
+  
+  readFile(){
+    this.aantalCursussenToegevoegd = 0;
+    this.aantalCursusInstantiesToegevoegd = 0;
+    this.aantalDuplicaten= 0;
+    this.correctFormaat = true;
+    this.foutRegel = 0;
+    let fileReader = new FileReader();
+    fileReader.onload = () => {
     console.log(fileReader.result); // read entire file
     this.fileContents =  fileReader.result as string;
-
-    let lines: string[] = this.fileContents.split('\n\n');
-    lines.pop(); // verwijdert laatste lege array.
-    let cursusLijst: {}[] = [];
-    
-    
-    console.log(lines[0]);
-    lines.forEach(element => {
-      let cursusBlok = element.split('\n');
-      let newCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
-      cursusBlok.forEach(line => {
-        if(line.startsWith('Titel')){
-          newCursus.Titel = line.substring(7);
-        } else if(line.startsWith('Cursuscode')){
-          newCursus.Cursuscode = line.substring(12);
-        } else if(line.startsWith('Duur')){
-          newCursus.Duur = +line.substring(6,7);
-        } else if(line.startsWith('Startdatum')){
-          newCursus.Startdatum = line.substring(12)
-        } else {
-          console.log('Cannot read line.');
-        }
-      });
-      cursusLijst.push(newCursus);
-    });
-    console.log('Cursuslijst lengte: ' + cursusLijst.length)
-    cursusLijst.forEach(cursus => {
-      console.log(cursus);
-    });
-
-    // cursusLijst.forEach(cursus => {
-    //   fetch('https://localhost:7183/api/cursus', {
-    //     method: 'POST',
-    //     headers:{
-    //       'Content-Type':'application/json'
-    //     },
-    //     body: JSON.stringify(cursus)
-    //   })
-    //   //.then((response) => response.json())
-    //   .then((data) => {
-    //   console.log('Success:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
-    // });
-
-    fetch('https://localhost:7183/api/cursus', {
-        method: 'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(cursusLijst)
-      })
-      .then((response) => response.json())
-      .then((data) => {
-      console.log('Success:', data);
-      this.aantalCursusInstantiesToegevoegd = data.cursusInstantieToevoeging;
-      this.aantalCursussenToegevoegd = data.cursusToevoeging;
-      this.aantalDuplicaten = data.duplicaten;
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    let lijst : {}[]= this.fileValidation()!;
+    this.objectenSturen(lijst);
   }
-  fileReader.readAsText(this.fileEntity);
-}
+    fileReader.readAsText(this.fileEntity);
+  };
 
 constructor() { }
 

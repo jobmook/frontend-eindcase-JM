@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { CursussenComponent } from './cursussen/cursussen.component';
 import { CursusInvoerenComponent } from './cursus-invoeren/cursus-invoeren.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CursusListComponent } from './cursus-list/cursus-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CursussenComponent,
-    CursusInvoerenComponent
+    CursusInvoerenComponent,
+    CursusListComponent
   ],
   imports: [
     BrowserModule,
