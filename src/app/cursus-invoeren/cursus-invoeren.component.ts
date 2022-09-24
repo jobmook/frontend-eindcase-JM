@@ -1,7 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { outputAst } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CursusService } from '../cursus.service';
 import { createCursus } from '../models/cursus';
 
 @Component({
@@ -72,12 +71,12 @@ export class CursusInvoerenComponent implements OnInit {
   }
   
   // Returns: array met Cursus objecten -> kan worden ingelezen door backend
-  fileValidation (){
+  fileValidation (readfileContents: string){
     let cursusLijst: {}[] = [];
     let nieuweCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
     
     let counter = 0;
-    let lines: string[] = this.fileContents.split('\n');
+    let lines: string[] = readfileContents.split('\n');
     lines.pop();
     for (let index = 0; index < lines.length; index++) {
       const currentLine = lines[index];
@@ -136,6 +135,7 @@ export class CursusInvoerenComponent implements OnInit {
       }
       else counter++; 
     }
+    if(cursusLijst.length == 0) throw Error;
     return cursusLijst;
   }
   
@@ -149,7 +149,7 @@ export class CursusInvoerenComponent implements OnInit {
     fileReader.onload = () => {
     console.log(fileReader.result); // read entire file
     this.fileContents =  fileReader.result as string;
-    let lijst : {}[]= this.fileValidation()!;
+    let lijst : {}[]= this.fileValidation(this.fileContents)!;
     this.objectenSturen(lijst);
   }
     fileReader.readAsText(this.fileEntity);

@@ -1,7 +1,7 @@
 <h3>Tekstbestand opvoeren:</h3>
 
 <input type="file" (change)="onFileSelected($event)">
-<button type="button" class="btn btn-primary" (click)="readFile()">Invoeren</button>
+<button type="button" id='fileOpsturen' class="btn btn-primary" (click)="readFile()">Invoeren</button>
 
 <div *ngIf="foutRegel != 0" class="foutRegel">
     <p>Bestand is niet in correct formaat op regel {{ foutRegel + 1 }}</p>

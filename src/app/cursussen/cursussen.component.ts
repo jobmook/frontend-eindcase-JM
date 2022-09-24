@@ -1,7 +1,6 @@
 import { formatDate, JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CURSUSSEN } from '../mock-cursussen';
-import { CursusService } from '../cursus.service';
 import { createCursus, Cursus } from '../models/cursus'
 
 @Component({
@@ -49,7 +48,7 @@ objectenUitlezen(){
   })
 }
 
-constructor(private cursusService: CursusService) { }
+constructor() { }
 
   ngOnInit(): void {
     this.objectenUitlezen();

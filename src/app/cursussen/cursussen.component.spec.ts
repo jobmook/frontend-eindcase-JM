@@ -15,9 +15,15 @@ describe('CursussenComponent', () => {
     fixture = TestBed.createComponent(CursussenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    spyOn(component, 'objectenUitlezen');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  it('should get all cursussen', () => {
+    component.ngOnInit();
+    expect(component.objectenUitlezen).toHaveBeenCalled();
+  })
 });
