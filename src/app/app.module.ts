@@ -6,13 +6,15 @@ import { CursusInvoerenComponent } from './cursus-invoeren/cursus-invoeren.compo
 import { HttpClientModule } from '@angular/common/http';
 import { CursusListComponent } from './cursus-list/cursus-list.component';
 import { CursussenComponent } from './cursussen/cursussen.component';
+import { CursusFavorietenComponent } from './cursus-favorieten/cursus-favorieten.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CursussenComponent,
     CursusInvoerenComponent,
-    CursusListComponent
+    CursusListComponent,
+    CursusFavorietenComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,13 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  table, th {
+    font-weight: bold;
+  }
+
+  #weekOverzicht {
+    display: flex;
+    align-items: flex-start;
+  }

@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { outputAst } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import * as moment from 'moment';
 import { createCursus } from '../models/cursus';
 
 @Component({
@@ -73,7 +74,8 @@ export class CursusInvoerenComponent implements OnInit {
   // Returns: array met Cursus objecten -> kan worden ingelezen door backend
   fileValidation (readfileContents: string){
     let cursusLijst: {}[] = [];
-    let nieuweCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
+    //let nieuweCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
+    let nieuweCursus = createCursus();
     
     let counter = 0;
     let lines: string[] = readfileContents.split('\n');
@@ -114,7 +116,7 @@ export class CursusInvoerenComponent implements OnInit {
             this.foutRegel =  index;
             return;
           }
-          nieuweCursus.Startdatum = foundStartdatum[1];
+          nieuweCursus.Startdatum = moment(foundStartdatum[1], 'DD/MM/YYYY').toDate();
           break;
   
         case 4:
@@ -131,7 +133,7 @@ export class CursusInvoerenComponent implements OnInit {
       if(counter == 4) {
         cursusLijst.push(nieuweCursus);
         counter = 0;
-        nieuweCursus = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
+        nieuweCursus = createCursus();
       }
       else counter++; 
     }
