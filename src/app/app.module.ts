@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CursusListComponent } from './cursus-list/cursus-list.component';
 import { CursussenComponent } from './cursussen/cursussen.component';
 import { CursusFavorietenComponent } from './cursus-favorieten/cursus-favorieten.component';
+import { CursusWeekKeuzeComponent } from './cursus-week-keuze/cursus-week-keuze.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CursusFavorietenComponent } from './cursus-favorieten/cursus-favorieten
     CursussenComponent,
     CursusInvoerenComponent,
     CursusListComponent,
-    CursusFavorietenComponent
+    CursusFavorietenComponent,
+    CursusWeekKeuzeComponent
   ],
   imports: [
     BrowserModule,

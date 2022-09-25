@@ -6,8 +6,3 @@ table, th, td {
   table, th {
     font-weight: bold;
   }
-
-  #weekOverzicht {
-    display: flex;
-    align-items: flex-start;
-  }

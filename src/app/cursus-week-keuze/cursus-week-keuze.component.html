@@ -1,0 +1,14 @@
+<div id="weekOverzicht">
+    <button id="vorigJaar" (click)="vorigJaar()" ><<</button>
+    <button id="vorigeWeek" (click)="vorigeWeek()" ><</button>
+    <h4>Weekoverzicht week [ {{ currentMoment.week() }} ] jaar [ {{ currentMoment.year()}} ]</h4>
+    <button id="volgendeWeek" (click)="volgendeWeek()">></button>
+    <button id="volgendJaar" (click)="volgendJaar()" >>></button>
+    <button id="favoriet" (click)="favoriet()">Voeg toe aan favorieten</button>
+    <button id="huidigeWeek" (click)="huidigeWeek()">Huidige week</button>
+</div>
+
+Favorieten
+<ul id="favorietenLijst" *ngFor="let favorietItem of favorieten">
+    <li><button (click)="naarFavorieteWeek(favorietItem)">Week {{ favorietItem.week() }} Jaar {{ favorietItem.year() }}</button></li>
+</ul>

@@ -1,11 +1,21 @@
-<h2>Cursusoverzicht:</h2>
-<div id="weekOverzicht">
-    <button id="vorigeWeek"><</button>
-    <h4>Weekoverzicht week [ {{ currentWeek }} ] jaar [ {{ currentYear }} ]</h4>
-    <button id="volgendeWeek">></button>
-</div>
-
-<table>
+<app-cursus-week-keuze (weekEvent)="haalDatumOp($event)"></app-cursus-week-keuze>
+<table *ngIf="!isLoading; else retrievingCursussen">
+    <thead>
+        <td>Startdatum</td>
+        <td>Duur</td>
+        <td>Titel</td>        
+    </thead>
+    <tbody>
+        <tr *ngFor="let cursusItem of lijstInGekozenWeek()">
+            <td>{{cursusItem.Startdatum | date: 'dd/MM/yyyy'}}</td>
+            <td>{{cursusItem.Duur}}</td>
+            <td>{{cursusItem.Titel}}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<table *ngIf="!isLoading; else retrievingCursussen">
     <thead>
         <td>Startdatum</td>
         <td>Duur</td>
@@ -19,3 +29,7 @@
         </tr>
     </tbody>
 </table>
+
+<ng-template #retrievingCursussen>
+    <div>Cursussen worden opgehaald...</div>
+</ng-template>

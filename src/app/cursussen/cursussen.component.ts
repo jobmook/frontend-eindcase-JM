@@ -1,5 +1,7 @@
 import { formatDate, JsonPipe } from '@angular/common';
+import { DEFAULT_INTERPOLATION_CONFIG } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { CURSUSSEN } from '../mock-cursussen';
 import { createCursus, Cursus } from '../models/cursus'
 
@@ -10,7 +12,9 @@ import { createCursus, Cursus } from '../models/cursus'
 })
 export class CursussenComponent implements OnInit {
   cursussen : Cursus[] = []; // refactor.
-  // cursusLijst : {Titel: string, Cursuscode:string, Duur:number, Startdatum: string }[] = []; // refactor.
+  isLoading = true;
+
+
 
 resetLijst(){
   fetch('https://localhost:7183/api/cursus/remove-all-entries')
@@ -39,12 +43,13 @@ objectenUitlezen(){
         newCursus.Cursuscode = cursus.code;
         const datum = cursus.cursusInstanties[index].startdatum;
         let datumDate = new Date(datum);
-        newCursus.Startdatum = datumDate
+        newCursus.Startdatum = datumDate;
         console.log(newCursus.Startdatum);
         this.cursussen.push(newCursus)
       }
     }
-    this.cursussen.sort((a,b) => a.Startdatum.valueOf() - b.Startdatum.valueOf())
+    this.cursussen.sort((a,b) => a.Startdatum.valueOf() - b.Startdatum.valueOf());
+    this.isLoading = false;
   })
 }
 
