@@ -1,5 +1,6 @@
 <h3>Tekstbestand invoeren:</h3>
 
+    <b>Belangrijk: vul altijd een start- en einddatum in.</b>
     <div id="divInputFile">
         <p>Bestand:</p>
         <input id="inputFile" type="file" (change)="onFileSelected($event)">
@@ -23,6 +24,3 @@
 <p *ngIf="!correctFormaat">'Bestand kan niet worden gevonden' en/of 'Bestand is niet in correct formaat.'</p>
 <p id="toevoeging" *ngIf="aantalCursussenToegevoegd != 0 && aantalCursusInstantiesToegevoegd != 0">Er zijn {{ aantalCursussenToegevoegd }} cursussen en {{ aantalCursusInstantiesToegevoegd}} cursusinstanties toegevoegd.</p>
 <p id="duplicaten" *ngIf="aantalDuplicaten != 0">Er zijn {{ aantalDuplicaten }} duplicaten gevonden.</p>
-
-<br>
-<button (click)="resetLijst()">Reset</button>

@@ -26,5 +26,3 @@ In de README van deze repo staan verdere instructies om de backend te starten.
 De applicatie bestaat uit een pagina met meerdere componenten.
 Op de website worden twee lijsten getoond. De eerste toont de cursusinstanties per gekozen week.  
 De tweede lijst toont alle cursusinstanties die zijn geregistreerd ongeacht de ingevoerde start- en einddatum.
-
-BELANGRIJK: geef altijd een start- en einddatum op bij het invoeren van een tekstbestand.

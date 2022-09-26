@@ -40,18 +40,6 @@ export class CursusInvoerenComponent implements OnInit {
     this.fileEntity = file;
   }
   
-  resetLijst(){
-    fetch('https://localhost:7183/api/cursus/remove-all-entries')
-    .then(response => response)
-    .then((data) => {
-      console.log(data);
-      this.aantalCursussenToegevoegd = 0;
-      this.aantalCursusInstantiesToegevoegd  = 0;
-      this.aantalDuplicaten = 0;
-    }
-   );
-  }
-  
   objectenSturen(cursusLijst: {}[]){
     fetch('https://localhost:7183/api/cursus', {
       method: 'POST',
@@ -149,7 +137,7 @@ export class CursusInvoerenComponent implements OnInit {
     this.foutRegel = 0;
     let fileReader = new FileReader();
     fileReader.onload = () => {
-    console.log(fileReader.result); // read entire file
+    console.log(fileReader.result); // file lezen
     this.fileContents =  fileReader.result as string;
     let lijst : {}[]= this.fileValidation(this.fileContents)!;
     this.objectenSturen(lijst);

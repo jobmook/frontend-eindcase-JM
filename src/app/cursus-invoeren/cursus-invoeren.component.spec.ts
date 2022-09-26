@@ -16,14 +16,9 @@ describe('CursusInvoerenComponent', () => {
     fixture = TestBed.createComponent(CursusInvoerenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    spyOn(component, 'readFile')
-    spyOn(component, 'fileValidation').and.returnValue([{
-      "Titel": "C# Programmeren",
-      "Cursuscode": "CNETIN",
-      "Duur": "5 dagen",
-      "Startdatum": "8/10/2018"
-  }]);
-    spyOn(component, 'objectenSturen')
+    spyOn(component, 'readFile');
+    spyOn(component, 'fileValidation');
+    spyOn(component, 'objectenSturen');
   });
 
   it('should create', () => {
@@ -37,13 +32,7 @@ describe('CursusInvoerenComponent', () => {
     expect(component.readFile).toHaveBeenCalled();
   })
 
-  it('correct situation_should make a file validation array', () => {
-    const str = 'Titel: C# Programmeren\nCursuscode: CNETIN\nDuur: 5 dagen\nStartdatum: 8/10/2018\n\n'
-    let res = component.fileValidation(str);
-    expect(res).toHaveSize(1);
-  })
-
-  it('should detect file input change', () => {
+  it('should detect input file but mark it as incorrect file format', () => {
     const dataTransfer = new DataTransfer()
     dataTransfer.items.add(new File([''], 'test-file.pdf'))
 
@@ -56,6 +45,6 @@ describe('CursusInvoerenComponent', () => {
 
     expect(component.fileEntity).toBeTruthy()
     expect(component.fileEntity.name).toBe('test-file.pdf')
-    
+    expect(component.correctFormaat).toBe(false);
 });
 });

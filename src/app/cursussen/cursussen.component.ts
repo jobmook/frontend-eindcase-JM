@@ -14,18 +14,6 @@ export class CursussenComponent implements OnInit {
   cursussen : Cursus[] = []; // refactor.
   isLoading = true;
 
-
-
-resetLijst(){
-  fetch('https://localhost:7183/api/cursus/remove-all-entries')
-  .then(response => response)
-  .then((data) => {
-    console.log(data);
-    this.objectenUitlezen();
-  }
- );
-}
-
 haalItemsOp(value: boolean){
   if(value) this.objectenUitlezen();
 }
@@ -44,7 +32,6 @@ objectenUitlezen(){
         const datum = cursus.cursusInstanties[index].startdatum;
         let datumDate = new Date(datum);
         newCursus.Startdatum = datumDate;
-        console.log(newCursus.Startdatum);
         this.cursussen.push(newCursus)
       }
     }
@@ -58,8 +45,4 @@ constructor() { }
   ngOnInit(): void {
     this.objectenUitlezen();
   };
-
-
-  ngOnChange(){
-  }
 }  

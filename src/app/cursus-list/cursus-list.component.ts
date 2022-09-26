@@ -29,8 +29,7 @@ export class CursusListComponent implements OnInit {
     });
     return lijst;
  }
-
-
+ 
   constructor() { }
 
   ngOnInit(): void {
