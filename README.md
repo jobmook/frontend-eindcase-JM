@@ -15,8 +15,7 @@ Gebruik `ng test` in de terminal om de tests te runnen via [Karma](https://karma
 
 ## Backend server starten
 
-Ga naar de github repo `BACKEND CASE JM` om de backend repo die bij deze frontend hoort te vinden.
-In de README van deze repo staan verdere instructies om de backend te starten.
+Ga naar de github repo `BACKEND-CASE-JM` om de backend repo die bij deze frontend hoort te vinden.
 
 
 <h2>Handleiding<h2>
