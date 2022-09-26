@@ -16,6 +16,12 @@ Gebruik `ng test` in de terminal om de tests te runnen via [Karma](https://karma
 ## Backend server starten
 
 Ga naar de github repo `BACKEND-CASE-JM` om de backend repo die bij deze frontend hoort te vinden.
+Run het project CursusApp.Backend om de server te starten.
+
+## Database
+
+Om de database aan te maken die wordt gebruikt door de backend moet je een Update-Database commando uitvoeren in de Package Manager Console.
+De database zou dan automatisch moeten worden aangemaakt, omdat de connection string in het `appsettings.json` bestand staat.
 
 
 <h2>Handleiding<h2>
