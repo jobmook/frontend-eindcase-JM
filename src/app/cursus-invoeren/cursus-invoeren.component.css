@@ -5,3 +5,24 @@
 #toevoeging {
     color: green;
 }
+
+#divInputFile {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    vertical-align: baseline;
+}
+
+#divInputStartdatum {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    vertical-align: baseline;
+}
+
+#divInputEinddatum {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    vertical-align: baseline;
+}

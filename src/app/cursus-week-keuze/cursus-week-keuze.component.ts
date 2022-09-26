@@ -42,6 +42,7 @@ export class CursusWeekKeuzeComponent implements OnInit {
 
   naarFavorieteWeek(value: moment.Moment){
     this.currentMoment = value.clone();
+    this.weekEvent.emit(this.currentMoment);
   }
 
   constructor() { 

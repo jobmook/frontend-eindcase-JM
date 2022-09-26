@@ -6,8 +6,8 @@ import { CursusInvoerenComponent } from './cursus-invoeren/cursus-invoeren.compo
 import { HttpClientModule } from '@angular/common/http';
 import { CursusListComponent } from './cursus-list/cursus-list.component';
 import { CursussenComponent } from './cursussen/cursussen.component';
-import { CursusFavorietenComponent } from './cursus-favorieten/cursus-favorieten.component';
 import { CursusWeekKeuzeComponent } from './cursus-week-keuze/cursus-week-keuze.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,12 +15,12 @@ import { CursusWeekKeuzeComponent } from './cursus-week-keuze/cursus-week-keuze.
     CursussenComponent,
     CursusInvoerenComponent,
     CursusListComponent,
-    CursusFavorietenComponent,
-    CursusWeekKeuzeComponent
+    CursusWeekKeuzeComponent,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

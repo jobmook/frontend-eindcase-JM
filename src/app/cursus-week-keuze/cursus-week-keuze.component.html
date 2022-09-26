@@ -9,6 +9,15 @@
 </div>
 
 Favorieten
-<ul id="favorietenLijst" *ngFor="let favorietItem of favorieten">
-    <li><button (click)="naarFavorieteWeek(favorietItem)">Week {{ favorietItem.week() }} Jaar {{ favorietItem.year() }}</button></li>
+<div *ngIf="favorieten.length != 0; else geenFavorieten">
+    <ul id="favorietenLijst" *ngFor="let favorietItem of favorieten">
+        <li><button (click)="naarFavorieteWeek(favorietItem)">Week {{ favorietItem.week() }} Jaar {{ favorietItem.year() }}</button></li>
+    </ul>
+</div>
+
+
+<ng-template #geenFavorieten>
+<ul>
+    <li>Nog geen favorieten geselecteerd...</li>
 </ul>
+</ng-template>

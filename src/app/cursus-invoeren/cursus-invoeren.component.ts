@@ -18,6 +18,8 @@ export class CursusInvoerenComponent implements OnInit {
   aantalDuplicaten: number = 0;
   foutRegel = 0;
   correctFormaat: boolean = true;
+  startdatum: string = '';
+  einddatum: string = '';
   
   @Output()
   postRequestEvent = new EventEmitter<boolean>();
@@ -71,12 +73,10 @@ export class CursusInvoerenComponent implements OnInit {
     });  
   }
   
-  // Returns: array met Cursus objecten -> kan worden ingelezen door backend
   fileValidation (readfileContents: string){
     let cursusLijst: {}[] = [];
-    //let nieuweCursus : { Titel:string, Cursuscode:string, Duur:number, Startdatum: string} = {Titel:'', Cursuscode:'', Duur:0, Startdatum:'' };
     let nieuweCursus = createCursus();
-    
+
     let counter = 0;
     let lines: string[] = readfileContents.split('\n');
     lines.pop();
@@ -131,7 +131,7 @@ export class CursusInvoerenComponent implements OnInit {
           break;
       }
       if(counter == 4) {
-        cursusLijst.push(nieuweCursus);
+        if((nieuweCursus.Startdatum <= new Date(this.einddatum) && nieuweCursus.Startdatum >= new Date(this.startdatum))) cursusLijst.push(nieuweCursus);
         counter = 0;
         nieuweCursus = createCursus();
       }

@@ -1,7 +1,20 @@
-<h3>Tekstbestand opvoeren:</h3>
+<h3>Tekstbestand invoeren:</h3>
 
-<input type="file" (change)="onFileSelected($event)">
-<button type="button" id='fileOpsturen' class="btn btn-primary" (click)="readFile()">Invoeren</button>
+    <div id="divInputFile">
+        <p>Bestand:</p>
+        <input id="inputFile" type="file" (change)="onFileSelected($event)">
+    </div>
+    <div id="divInputStartdatum">
+        <p>Startdatum: </p>
+        <input id="inputStartdatum" type="date" [(ngModel)]="startdatum">
+    </div>
+    <div id="divInputEinddatum">
+        <p>Einddatum: </p>
+        <input id="inputEinddatum" type="date" [(ngModel)]="einddatum">
+    </div>
+    <button id='fileOpsturen' class="btn btn-primary" (click)="readFile()">Invoeren</button>     
+
+
 
 <div *ngIf="foutRegel != 0" class="foutRegel">
     <p>Bestand is niet in correct formaat op regel {{ foutRegel + 1 }}</p>

@@ -3,6 +3,6 @@ table, th, td {
     border-collapse: collapse;
   }
 
-  table, th {
+  thead {
     font-weight: bold;
   }
